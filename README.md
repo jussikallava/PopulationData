@@ -2,7 +2,7 @@ Henkilörekisterin luontityökalu:
 
 Spring boot, REST api, jolla voi hakea tietoja henkilöistä ja luoda analytiikkaa.
 
-Sovellus luo keinotekoisen aineiston todellisten henkilöiden pohjalta.
+Sovellus luo keinotekoisen aineiston todellisten henkilöiden pohjalta, Neo4j graafitietokantaan.
 
 Asuinkunta:
 
@@ -13,3 +13,6 @@ Total: 311
 Nimet exceleistä:
 
 https://www.avoindata.fi/data/fi/dataset/none
+
+## Neo4j salasanan vaihto
+:server change-password

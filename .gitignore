@@ -1,0 +1,8 @@
+*.properties
+.idea
+.settings
+.project
+.classpath
+.vscode
+.factorypath
+target
