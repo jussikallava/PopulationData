@@ -2,14 +2,13 @@ package fi.kallava.population.api.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fi.kallava.population.domain.FirstName;
+import fi.kallava.population.domain.Municipality;
 import fi.kallava.population.domain.Person;
 import fi.kallava.population.service.FirstNameServiceImpl;
-import io.swagger.annotations.Api;
+import fi.kallava.population.service.MunicipalityServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-import fi.kallava.population.exception.DataFormatException;
 import fi.kallava.population.service.PersonServiceImpl;
 import fi.kallava.population.service.PopulationService;
 
@@ -25,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-@RequestMapping(value = "/people")
-@Api(tags = {"people"})
+@RequestMapping(value = "/population/v1")
+//@Api(tags = {"people"})
 public class PopulationController extends AbstractRestHandler {
 
     @Autowired
@@ -38,8 +37,12 @@ public class PopulationController extends AbstractRestHandler {
     @Autowired
     private FirstNameServiceImpl firstNameService;
 
+    @Autowired
+    private MunicipalityServiceImpl municipalityService;
+
     private ObjectMapper mapper = new ObjectMapper();
 
+    /* Endpoints for people */
     @RequestMapping(value = "/create/men/firstname",
             method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.CREATED)
@@ -47,6 +50,7 @@ public class PopulationController extends AbstractRestHandler {
     public void createPopulationMen(HttpServletRequest request, HttpServletResponse response) {
         this.populationService.createPopulationMen();
     }
+
     @RequestMapping(value = "/create/women/firstname",
             method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.CREATED)
@@ -86,5 +90,26 @@ public class PopulationController extends AbstractRestHandler {
         //checkResourceFound(person);
         return person;
     }
+    /****************************************/
+
+
+    /* Endpoints for municipality */
+    @RequestMapping(value = "/create/municipality",
+            method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create municipality.")
+    public void createMunicipality(@RequestBody String json, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            ObjectNode node = mapper.readValue(json, ObjectNode.class);
+            if (node.get("name") != null && node.get("municipalityNo") != null) {
+                System.out.println(node.get("name").textValue());
+                System.out.println(node.get("municipalityNo").textValue());
+                this.municipalityService.createOrUpdate(new Municipality(node.get("name").textValue(),Integer.getInteger(node.get("municipalityNo").textValue())));
+            }
+        }catch(Exception e){
+
+        }
+    }
+
 
 }
