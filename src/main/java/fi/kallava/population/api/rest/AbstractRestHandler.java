@@ -15,16 +15,16 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class is meant to be extended by all REST resource "controllers".
- * It contains exception mapping and other common REST API functionality
+ * This class is meant to be extended by all REST resource "controllers". It
+ * contains exception mapping and other common REST API functionality
  */
-//@ControllerAdvice?
+// @ControllerAdvice?
 public abstract class AbstractRestHandler implements ApplicationEventPublisherAware {
 
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
     protected ApplicationEventPublisher eventPublisher;
 
-    protected static final String  DEFAULT_PAGE_SIZE = "100";
+    protected static final String DEFAULT_PAGE_SIZE = "100";
     protected static final String DEFAULT_PAGE_NUM = "0";
 
     @Override
