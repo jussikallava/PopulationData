@@ -1,39 +1,39 @@
 package fi.kallava.population.domain;
 
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.hibernate.validator.constraints.NotBlank;
 
-@NodeEntity
-public class Person extends Entity {
+public class PersonRequest {
 
-    @Relationship("IS_NAMED")
-    private FirstName firstName;
-
+    @NotBlank(message = "ID for the firstname is required!")
+    private String firstname;
+    @NotBlank(message = "ID for the lastname is required!")
+    private String lastname;
+    @NotBlank(message = "Social security ID must be provided!")
     private String ssid;
-    private int count;
 
-    public Person(){}
+    public PersonRequest() {
+    }
 
-    public Person(FirstName firstName, String ssid, Integer count){
-        setCount(count);
-        setName(firstName);
+    public PersonRequest(String firstname, String lastname, String ssid) {
+        setFirstname(firstname);
+        setLastname(lastname);
         setSsid(ssid);
     }
 
-    public FirstName getName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(FirstName firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public int getCount() {
-        return count;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setCount(Integer count) {
-        this.count = count.intValue();
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public void setSsid(String ssid) {

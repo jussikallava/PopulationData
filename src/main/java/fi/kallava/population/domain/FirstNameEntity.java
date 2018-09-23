@@ -6,13 +6,23 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class FirstName extends Entity {
 
     private String name;
+    private String sex;
     private int count;
 
     public FirstName(){}
 
-    public FirstName(String name, Integer count){
+    public FirstName(String name, String sex, Integer count){
         setCount(count);
         setName(name);
+        setSex(sex);
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getName() {
