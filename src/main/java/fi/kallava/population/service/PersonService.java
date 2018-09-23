@@ -1,6 +1,6 @@
 package fi.kallava.population.service;
 
-import fi.kallava.population.domain.Person;
+import fi.kallava.population.domain.PersonEntity;
 
-interface PersonService extends Service<Person> {
+interface PersonService extends Service<PersonEntity> {
 }

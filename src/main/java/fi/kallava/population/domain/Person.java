@@ -2,7 +2,7 @@ package fi.kallava.population.domain;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class PersonRequest {
+public class Person {
 
     @NotBlank(message = "ID for the firstname is required!")
     private String firstname;
@@ -11,10 +11,10 @@ public class PersonRequest {
     @NotBlank(message = "Social security ID must be provided!")
     private String ssid;
 
-    public PersonRequest() {
+    public Person() {
     }
 
-    public PersonRequest(String firstname, String lastname, String ssid) {
+    public Person(String firstname, String lastname, String ssid) {
         setFirstname(firstname);
         setLastname(lastname);
         setSsid(ssid);

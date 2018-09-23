@@ -3,6 +3,9 @@ package fi.kallava.population.service;
 import fi.kallava.population.Neo4jSessionFactory;
 import org.neo4j.ogm.session.Session;
 
+import java.util.HashMap;
+import java.util.Map;
+
 abstract class GenericService<T> implements Service<T> {
 
     private static final int DEPTH_LIST = 0;
@@ -31,5 +34,21 @@ abstract class GenericService<T> implements Service<T> {
         //return find(entity.id);
     }
 
+    public T getRandomEntity() {
+        String query = "MATCH (a:"+getEntityType().getSimpleName()+")\n" +
+                "RETURN a, rand() as r\n" +
+                "ORDER BY r\n" +
+                "LIMIT 1";
+        Map<String, Object> params = new HashMap<>();
+        params.put("entity", getEntityType().toString());
+        try {
+            return session.queryForObject(getEntityType(), query, params);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
     abstract Class<T> getEntityType();
+
+
 }

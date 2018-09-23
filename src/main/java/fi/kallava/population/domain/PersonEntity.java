@@ -3,39 +3,56 @@ package fi.kallava.population.domain;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.Date;
+
 @NodeEntity
-public class Person extends Entity {
+public class PersonEntity extends Entity {
 
     @Relationship("HAS_FIRSTNAME")
-    private FirstName firstName;
+    private FirstNameEntity firstName;
 
     @Relationship("HAS_LASTNAME")
-    private LastName lastname;
+    private LastNameEntity lastname;
+
+    @Relationship("LIVES_IN")
+    private MunicipalityEntity municipality;
 
     private String ssid;
 
-    public Person(){}
+    private Date dateOfBirth;
 
-    public Person(FirstName firstName, LastName lastname, String ssid){
+    public PersonEntity(){}
+
+    public PersonEntity(FirstNameEntity firstName, LastNameEntity lastname, MunicipalityEntity municipality, String ssid, Date dateOfBirth){
         setName(firstName);
         setLastName(lastname);
+        setMunicipality(municipality);
         setSsid(ssid);
+        setDateOfBirth(dateOfBirth);
     }
 
-    public FirstName getName() {
+    public FirstNameEntity getName() {
         return firstName;
     }
 
-    public void setLastName(LastName lastname) {
+    public void setName(FirstNameEntity firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(LastNameEntity lastname) {
         this.lastname = lastname;
     }
 
-    public LastName getLastName() {
+    public LastNameEntity getLastName() {
         return lastname;
     }
 
-    public void setName(FirstName firstName) {
-        this.firstName = firstName;
+    public void setMunicipality(MunicipalityEntity municipality) {
+        this.municipality = municipality;
+    }
+
+    public MunicipalityEntity getMunicipality() {
+        return municipality;
     }
 
     public void setSsid(String ssid) {
@@ -44,6 +61,14 @@ public class Person extends Entity {
 
     public String getSsid() {
         return ssid;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
 }

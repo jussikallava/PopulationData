@@ -1,22 +1,17 @@
 package fi.kallava.population.api.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fi.kallava.population.domain.Municipality;
+import fi.kallava.population.domain.MunicipalityEntity;
+import fi.kallava.population.domain.PersonEntity;
 import fi.kallava.population.domain.Person;
-import fi.kallava.population.domain.PersonRequest;
-import fi.kallava.population.service.FirstNameServiceImpl;
-import fi.kallava.population.service.MunicipalityServiceImpl;
+import fi.kallava.population.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-
-import fi.kallava.population.service.PersonServiceImpl;
-import fi.kallava.population.service.PopulationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +37,13 @@ public class PopulationController extends AbstractRestHandler {
     private FirstNameServiceImpl firstNameService;
 
     @Autowired
+    private LastNameServiceImpl lastNameService;
+
+    @Autowired
     private MunicipalityServiceImpl municipalityService;
+
+    @Autowired
+    private CountyServiceImpl countyService;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -61,27 +62,32 @@ public class PopulationController extends AbstractRestHandler {
         this.populationService.createPopulationWomen();
     }
 
-    // @RequestMapping(value = "/create/woman", method = RequestMethod.POST)
-    // @PostMapping(value = "/create/woman")
+    @RequestMapping(value = "/create/lastname", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create lastnames.")
+    public void createPopulationLastnames(HttpServletRequest request, HttpServletResponse response) {
+        this.populationService.createPopulationLastnames();
+    }
 
-    @ResponseBody
+/*    @ResponseBody
     @RequestMapping(value = "/create/woman", headers = {
             "content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create woman.")
-    public void createPopulationWoman(@RequestBody @Valid PersonRequest pRequest, HttpServletRequest request,
-            HttpServletResponse response) {
+    public void createPopulationWoman(@RequestBody @Valid Person pRequest, HttpServletRequest request,
+                                      HttpServletResponse response) {
         this.personService.createOrUpdate(
-                new Person(firstNameService.find(Long.parseLong(pRequest.getTesti())), pRequest.getSsid(), 12));
-    }
+                new PersonEntity(firstNameService.find(Long.parseLong(pRequest.getFirstname())), lastNameService.find(Long.parseLong(pRequest.getLastname())), pRequest.getSsid()));
+    }*/
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
+    @RequestMapping(value = "/person/{id}", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get a single person.", notes = "You have to provide a valid person ID.")
-    public @ResponseBody Person getPerson(
+    public @ResponseBody
+    PersonEntity getPerson(
             @ApiParam(value = "The ID of the person.", required = true) @PathVariable("id") Long id,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Person person = this.personService.find(id);
+        PersonEntity person = this.personService.find(id);
         // checkResourceFound(person);
         return person;
     }
@@ -89,22 +95,34 @@ public class PopulationController extends AbstractRestHandler {
     /****************************************/
 
     /* Endpoints for municipality */
-    @RequestMapping(value = "/create/municipality", method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(value = "/create/municipality", headers = {
+            "content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create municipality.")
-    public void createMunicipality(@RequestBody String json, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            ObjectNode node = mapper.readValue(json, ObjectNode.class);
-            if (node.get("name") != null && node.get("municipalityNo") != null) {
-                System.out.println(node.get("name").textValue());
-                System.out.println(node.get("municipalityNo").textValue());
-                this.municipalityService.createOrUpdate(new Municipality(node.get("name").textValue(),
-                        Integer.getInteger(node.get("municipalityNo").textValue())));
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
+    public void createMunicipality(@RequestBody Municipality municipality, HttpServletRequest request, HttpServletResponse response) {
+                this.municipalityService.createOrUpdate(new MunicipalityEntity(municipality.getName(),countyService.find(new Long(municipality.getCountyNo())),municipality.getMunicipalityNo()));
+    }
 
-        }
+    @RequestMapping(value = "/create/municipalities", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create municipalities.")
+    public void createPopulationMunicipalities(HttpServletRequest request, HttpServletResponse response) {
+        this.populationService.createPopulationMunicipalities();
+    }
+
+    @RequestMapping(value = "/create/counties", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create counties.")
+    public void createPopulationCounties(HttpServletRequest request, HttpServletResponse response) {
+        this.populationService.createPopulationCounties();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/create/people", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Create people.")
+    public void createPeople( HttpServletRequest request, HttpServletResponse response) {
+        this.populationService.createPeople(Long.parseLong("2"));
     }
 }

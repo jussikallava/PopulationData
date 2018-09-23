@@ -1,6 +1,6 @@
 package fi.kallava.population.service;
 
-import fi.kallava.population.domain.FirstName;
+import fi.kallava.population.domain.FirstNameEntity;
 
-interface FirstNameService extends Service<FirstName> {
+interface FirstNameService extends Service<FirstNameEntity> {
 }
