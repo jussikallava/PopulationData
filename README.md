@@ -1,18 +1,12 @@
-Henkilörekisterin luontityökalu:
+#Henkilörekisterin luontityökalu
 
-Spring boot, REST api, jolla voi hakea tietoja henkilöistä ja luoda analytiikkaa.
+Spring bootilla toteutettu REST web service, henkilöiden, kuntien ja maakuntien luomiseen.
+Sovellus on kehitetty Neo4j:n OGM (Object Graph Mapping)- kirjaston testaamiseen.
 
-Sovellus luo keinotekoisen aineiston todellisten henkilöiden pohjalta, Neo4j graafitietokantaan.
+Sovelluksen avulla voi luoda satunnaisen aineiston nimi- ja kuntatietojen pohjalta.
 
-Asuinkunta:
-
-https://www.avoindata.fi/data/fi/api/3/action/datastore_search?resource_id=b1cb9870-191f-4616-9c53-5388b7ca6beb&limit=1&offset=<random number>
-
-Total: 311
-
-Nimet exceleistä:
-
-https://www.avoindata.fi/data/fi/dataset/none
+Nimi- ja kuntatiedot on haettu avoindata-palvelusta ja ovat väestörekisterikeskuksen tarjoamia
+https://www.avoindata.fi/
 
 ## Neo4j salasanan vaihto
 :server change-password
