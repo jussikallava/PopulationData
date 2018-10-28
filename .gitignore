@@ -1,10 +1,10 @@
 *.properties
+*.iml
 .idea
 .settings
 .project
 .classpath
 .vscode
 .factorypath
-.iml
 target
 logs
