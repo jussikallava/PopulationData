@@ -1,12 +1,12 @@
-# Henkilörekisterin luontityökalu
+# Personal Registry Creation Tool
 
-Spring bootilla toteutettu REST web service, henkilöiden, kuntien ja maakuntien luomiseen.
-Sovellus on kehitetty Neo4j:n OGM (Object Graph Mapping)- kirjaston testaamiseen.
+Spring boot, RESTful web service for creating people, municipalities and provinces.
+The application has been developed to test Neo4j's Object Graph Mapping (OGM) library.
 
-Sovelluksen avulla voi luoda satunnaisen aineiston nimi- ja kuntatietojen pohjalta.
+Use this application to create random material based on name and city information.
 
-Nimi- ja kuntatiedot on haettu avoindata-palvelusta ja ovat väestörekisterikeskuksen tarjoamia
+Name and municipality information has been requested from the "avoindata"-service and are provided by the Population Register Center
 https://www.avoindata.fi/
 
-## Neo4j salasanan vaihto
+## Neo4j password change
 :server change-password
