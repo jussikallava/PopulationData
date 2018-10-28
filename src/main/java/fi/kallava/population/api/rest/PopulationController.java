@@ -62,7 +62,7 @@ public class PopulationController extends AbstractRestHandler {
         this.populationService.createPopulationWomen();
     }
 
-    @RequestMapping(value = "/create/lastname", method = RequestMethod.PUT)
+    @RequestMapping(value = "/create/lastnames", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create lastnames.")
     public void createPopulationLastnames(HttpServletRequest request, HttpServletResponse response) {

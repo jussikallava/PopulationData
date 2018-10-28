@@ -1,0 +1,4 @@
+username=neo4j
+password=passwd
+URI=bolt://localhost:7687
+connection.pool.size=20
