@@ -1,4 +1,4 @@
-#Henkilörekisterin luontityökalu
+# Henkilörekisterin luontityökalu
 
 Spring bootilla toteutettu REST web service, henkilöiden, kuntien ja maakuntien luomiseen.
 Sovellus on kehitetty Neo4j:n OGM (Object Graph Mapping)- kirjaston testaamiseen.
